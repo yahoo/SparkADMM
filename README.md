@@ -12,7 +12,7 @@ which can be found [here](https://web.stanford.edu/~boyd/papers/admm_distr_stats
 
 where `Z` in R^d, `F` is a convex function in `Z`, `d_i` are data points read from a file, `lam` is a regularization parameter, and `||.||_1` is the usual l1 norm.
 
-The framework is built over Spark, which presently is available on AxoniteRed, but can also be manually installed on any grid machine using yinst. The framework is generic; to apply it to an arbitrary separable convex problem, a developer needs to implement only three functions (one that reads data from a file, one that evaluates the objective function, and one that solves a local optimization problem with an additional proximal penalty term). An example implementation of logistic regression is included in the code.
+The framework is built over Spark and is generic: to apply it to an arbitrary separable convex problem, a developer needs to implement only three functions (one that reads data from a file, one that evaluates the objective function, and one that solves a local optimization problem with an additional proximal penalty term). An example implementation of logistic regression is included in the code.
 
 ## Installation Instructions ##
 
