@@ -14,11 +14,22 @@ where `Z` in R^d, `F` is a convex function in `Z`, `d_i` are data points read fr
 
 The framework is built over Spark and is generic: to apply it to an arbitrary separable convex problem, a developer needs to implement only three functions (one that reads data from a file, one that evaluates the objective function, and one that solves a local optimization problem with an additional proximal penalty term). An example implementation of logistic regression is included in the code.
 
+The code was developed by a team of Yahoo researchers including Stratis Ioannidis, Yunjiang Jiang, Nikolay Laptev, and Saeed Amizadeh. It was used in the paper:
+
+>Parallel News-Article Traffic Forecasting with ADMM. 
+>S. Ioannidis, Y. Jiang, S. Amizadeh, and N. Laptev.
+>2nd International Workshop on Mining and Learning  from Time Series (MiLeTS), 2016
+
 ## Installation Instructions ##
 
-#### Spark Installation ####
-
-Updated spark installation instructions can be found [here](http://spark.apache.org/docs/latest/)
+Updated spark installation instructions can be found [here](http://spark.apache.org/docs/latest/). Make sure that your python distribution includes the following packages:
+```
+numpy
+sklearn
+pandas
+logging
+json
+```
 
 
 
@@ -34,7 +45,7 @@ hadoop fs -chmod 755 LR-example.txt
 and then run the following command,  with USERNAME replaced by your user name:
 
 ```
-/homes/USERNAME/testroot/share/spark-*/bin/spark-submit --master yarn --deploy-mode client --num-executors 20 --executor-memory 2g --driver-memory 2g --conf spark.driver.maxResultSize=0 --queue default --archives 'webhdfs://HADOOP_CLUSTER:/user/USERNAME/archives/local-py.zip#python' --py-files 'SparkADMM.py,LogisticRegressionSolver.py,ADMMDataFrames.py,AbstractSolver.py' driver.py LR_example.txt regression_output
+spark-submit --master yarn --deploy-mode client --num-executors 20 --executor-memory 2g --driver-memory 2g --conf spark.driver.maxResultSize=0 --queue default  --py-files 'SparkADMM.py,LogisticRegressionSolver.py,ADMMDataFrames.py,AbstractSolver.py' driver.py LR_example.txt regression_output
 ```
 
 Additional parameters can be passed to the driver. A help message is printed when calling
