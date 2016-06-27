@@ -20,45 +20,7 @@ The framework is built over Spark and is generic: to apply it to an arbitrary se
 
 Updated spark installation instructions can be found [here](http://spark.apache.org/docs/latest/)
 
-* add the following lines to your .bashrc file
 
-```
-export JAVA_HOME=JDK_PATH
-export HADOOP_PREFIX=HADOOP_BIN_PATH/home/gs/hadoop/current
-export HADOOP_CONF_DIR=HADOOP_CONF_PATH/home/gs/conf/current
-export SPARK_CLASSPATH=SPARK_PATH
-```
-
-#### Obtaining the SparkADMM Code ####
-
-At the machine where you installed spark, clone this repository.
-
-#### Inform spark of the location of the python executable. ####
-
-The python installed on the grid is missing many useful ML packages, including `sklearn`, `numpy`, `pandas`, etc. To run the code in this repository (but also more sophisticated code that you may want to implement), you need a more complete python installation. This needs to be available both (a) on the machine from which you will execute spark, but also (b) shipped to every spark executor that is going to execute your code.
-
-For your convenience, a rather complete python distribution, as well as a shippable zip file have been included in this repository. Here's how you can use them: 
- 
-*    Tell spark where the python executable file is. To do so, do:
-
-     >```cd ~/testroot/share/spark/conf/ ```
-     >
-     >```cp spark-env.sh.template spark-env.sh```
-     
-     Then, edit the `spark-env.sh` file, and add the line
-
-     >``` export PYSPARK_PYTHON=./python/bin/python2.7 ```
-
-*    Upload this python distribution to HDFS. To do so, go to the SparkADMM folder. 
-     First create a directory to store the python archive on hdfs, and upload 
-     `local-py.zip` (containing the zipped python distribution) there: 
-
-
-     >```hadoop fs -mkdir archives```
-     >
-     >```hadoop fs -put local-py.zip archives``` 
-     >
-     >```hadoop fs -chmod -R 755 archives``` 
 
 ## Example Execution: Logistic Regression ##
 
