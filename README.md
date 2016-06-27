@@ -14,7 +14,7 @@ where `Z` in R^d, `F` is a convex function in `Z`, `d_i` are data points read fr
 
 The framework is built over Spark and is generic: to apply it to an arbitrary separable convex problem, a developer needs to implement only three functions (one that reads data from a file, one that evaluates the objective function, and one that solves a local optimization problem with an additional proximal penalty term). An example implementation of logistic regression is included in the code.
 
-The code was developed by a team of Yahoo researchers including Stratis Ioannidis, Yunjiang Jiang, Nikolay Laptev, and Saeed Amizadeh. It was used in the paper:
+The code was developed by a team of Yahoo researchers including Stratis Ioannidis, Yunjiang Jiang, Nikolay Laptev, Hamid Javadi, and Saeed Amizadeh. It was used in the paper:
 
 >Parallel News-Article Traffic Forecasting with ADMM. 
 >S. Ioannidis, Y. Jiang, S. Amizadeh, and N. Laptev.
@@ -22,7 +22,7 @@ The code was developed by a team of Yahoo researchers including Stratis Ioannidi
 
 ## Installation Instructions ##
 
-Updated spark installation instructions can be found [here](http://spark.apache.org/docs/latest/). Make sure that your python distribution includes the following packages:
+Updated spark installation instructions can be found [here](http://spark.apache.org/docs/latest/). Make sure that your python distribution includes the following modules:
 ```
 numpy
 sklearn
@@ -42,7 +42,7 @@ hadoop fs -put data/LR-example.txt
 hadoop fs -chmod 755 LR-example.txt
 ```
 
-and then run the following command,  with USERNAME replaced by your user name:
+and then run the following command:
 
 ```
 spark-submit --master yarn --deploy-mode client --num-executors 20 --executor-memory 2g --driver-memory 2g --conf spark.driver.maxResultSize=0 --queue default  --py-files 'SparkADMM.py,LogisticRegressionSolver.py,ADMMDataFrames.py,AbstractSolver.py' driver.py LR_example.txt regression_output
@@ -135,7 +135,7 @@ This method should receive as input an
 
 ```iterator<string> ```
  
-i.e., a list of strings; each string corresponds to a line in the file storing the data; each such line may 
+e.g., a list of strings. Each string corresponds to a line in the file storing the data; each such line may 
 represent a different  datapoint d_i. It should then return a 3-tuple 
 of the following form: 
 		
