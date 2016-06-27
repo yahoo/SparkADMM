@@ -18,7 +18,7 @@ The code was developed by a team of Yahoo researchers including Stratis Ioannidi
 
 >Parallel News-Article Traffic Forecasting with ADMM. 
 >S. Ioannidis, Y. Jiang, S. Amizadeh, and N. Laptev.
->2nd International Workshop on Mining and Learning  from Time Series (MiLeTS), 2016
+>International Workshop on Mining and Learning  from Time Series (MiLeTS), 2016
 
 ## Installation Instructions ##
 
@@ -57,7 +57,6 @@ Additional parameters can be passed to the driver. A help message is printed whe
 which returns this:
 
 ```
-Spark assembly has been built with Hive, including Datanucleus jars on classpath
 usage: driver.py [-h] [--lam LAM] [--rho RHO] [--N_parts N_PARTS] [--N_in N_IN] [--eps_in EPS_IN] [--N_out N_OUT] [--eps_out EPS_OUT] [--run_full_out]
                  [--run_conv_out]
                  inputfile outputfile
