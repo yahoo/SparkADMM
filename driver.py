@@ -35,8 +35,8 @@ if __name__=='__main__':
 	args = parser.parse_args()
 
 
-	#solver = LogisticRegressionSolver(max_it=args.N_in,eps=args.eps_in)
-	solver = SparseLinearRegressionSolver(max_it=args.N_in,eps=args.eps_in)
+	#solver = SparseLinearRegressionSolver(max_it=args.N_in,eps=args.eps_in)
+	solver = LogisticRegressionSolver(max_it=args.N_in,eps=args.eps_in)
 	sadmm = SparkADMM(solver,rho=args.rho,lam = args.lam, N_out=args.N_out, N_parts =args.N_parts, eps = args.eps_out, run_full=args.run_full_out )
 	
 	sadmm.runADMM(args.inputfile,args.outputfile)
