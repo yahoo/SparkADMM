@@ -227,12 +227,12 @@ class SparkADMM:
                         collectedZs = master_Z.join(keyPartitionIndex,numPartitions = self.key_parts).map(lambda (key, (value,partition)) : (partition, (key,value))).groupByKey().mapValues(lambda x: dict(x)).partitionBy(self.N_parts, partitionFunc = lambda x: x)  # key = feature
                         # collectedZs gives (partition_id, {feat: value})
 
-                        print 'collectedZs printed!!!'
-                        print collectedZs.collect()
+                        #print 'collectedZs printed!!!'
+                        #print collectedZs.collect()
 
                         rdd = rdd.join(collectedZs,numPartitions=self.N_parts).mapValues(lambda (inputTuple,Z): SparkADMM.localUpdate(self.solver,self.rho, Z,inputTuple)).cache()
-                        print 'rdd printed!!!'
-                        print rdd.collect()
+                        #print 'rdd printed!!!'
+                        #print rdd.collect()
                         # unimportant
                         primal_sum, obj_sum, counter = rdd.map(lambda (partition_id, (data,stats,Ul,Zl,local_primal_residual,localObj)):
                                                                           (local_primal_residual,localObj,1) ).reduce(lambda x,y:(x[0]+y[0],x[1]+y[1],x[2]+y[2]) )
@@ -245,21 +245,21 @@ class SparkADMM:
 
             #### verify that the reduceByKey is consistent with keyPartitionIndex in terms of partitioning of the features
 
-                        print 'rdd before soft thresholding!!!'
-                        print rdd.collect()
+                        #print 'rdd before soft thresholding!!!'
+                        #print rdd.collect()
 
                         master_Z = rdd.flatMap(unravelUlplZlAppendCounter).reduceByKey(lambda x,y: (x[0]+y[0],x[1]+y[1]), numPartitions = self.key_parts
                                                                                                         ).mapValues( lambda (summed, counter):
                                                                                                                         ProximityOperator(self.lam/(1.0 * counter * self.rho),summed/(1.0 * counter))).cache()
-                        print 'master_Z after soft thresholding!!!'
-                        print master_Z.collect()
+                        #print 'master_Z after soft thresholding!!!'
+                        #print master_Z.collect()
                         dual_residual = self.rho * np.sqrt(master_Z.join(old_Z,numPartitions = self.key_parts).values().map(lambda x: (x[0]-x[1])*(x[0]-x[1])).sum())
 
                         lz = self.lam * old_Z.map(lambda x: np.absolute(x[1])).sum()
                         old_Z.unpersist()
                         global_obj = obj_sum + lz   # this is global obj from previous iteration!
-                        print 'obj_sum = ', obj_sum
-                        print 'lam * master_Z = ', lz
+                        #print 'obj_sum = ', obj_sum
+                        #print 'lam * master_Z = ', lz
 
                         sumStats,maxStats,minStats = rdd.mapValues(lambda (data, stats, Ul, Zl, local_primal_residual,localObj): (stats,stats,stats)).values().reduce( lambda x,y: (simpleAddDictionaries(x[0],y[0]), maxDictionaries(x[1],y[1]),minDictionaries(x[2],y[2])) )
                         reportStats =  dict([ (key, str(sumStats[key]/(1.0*actualNumParts))+','+str(minStats[key])+','+str(maxStats[key]))  for key in sumStats])
