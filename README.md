@@ -213,3 +213,4 @@ programmer wishes to report (e.g., the time to completion, the number of iterati
 
 * [ADMM paper by Boyd et al.](https://web.stanford.edu/~boyd/papers/admm_distr_stats.html) The code here implements the generalized consensus algorithm in Chapter 7 of this paper.
 * [Spark documentation](https://spark.apache.org/docs/latest/)
+* [Hadoop documentation](https://hadoop.apache.org/)
